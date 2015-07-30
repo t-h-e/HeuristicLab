@@ -204,16 +204,16 @@ namespace HeuristicLab.Algorithms.RAPGA {
       if (!Parameters.ContainsKey("ReevaluateElites")) {
         Parameters.Add(new FixedValueParameter<BoolValue>("ReevaluateElites", "Flag to determine if elite individuals should be reevaluated (i.e., if stochastic fitness functions are used.)", (BoolValue)new BoolValue(false).AsReadOnly()) { Hidden = true });
       }
-      if (Parameters.ContainsKey("SimilarityCalculator")) {
-#pragma warning disable 0618
-        var oldParameter = (IConstrainedValueParameter<ISingleObjectiveSolutionSimilarityCalculator>)Parameters["SimilarityCalculator"];
-#pragma warning restore 0618
-        Parameters.Remove(oldParameter);
-        var newParameter = new ConstrainedValueParameter<ISolutionSimilarityCalculator>("SimilarityCalculator", "The operator used to calculate the similarity between two solutions.", new ItemSet<ISolutionSimilarityCalculator>(oldParameter.ValidValues));
-        var selectedSimilarityCalculator = newParameter.ValidValues.SingleOrDefault(x => x.GetType() == oldParameter.Value.GetType());
-        newParameter.Value = selectedSimilarityCalculator;
-        Parameters.Add(newParameter);
-      }
+//      if (Parameters.ContainsKey("SimilarityCalculator")) {
+//#pragma warning disable 0618
+//        var oldParameter = (IConstrainedValueParameter<ISingleObjectiveSolutionSimilarityCalculator>)Parameters["SimilarityCalculator"];
+//#pragma warning restore 0618
+//        Parameters.Remove(oldParameter);
+//        var newParameter = new ConstrainedValueParameter<ISolutionSimilarityCalculator>("SimilarityCalculator", "The operator used to calculate the similarity between two solutions.", new ItemSet<ISolutionSimilarityCalculator>(oldParameter.ValidValues));
+//        var selectedSimilarityCalculator = newParameter.ValidValues.SingleOrDefault(x => x.GetType() == oldParameter.Value.GetType());
+//        newParameter.Value = selectedSimilarityCalculator;
+//        Parameters.Add(newParameter);
+//      }
       #endregion
       Initialize();
     }

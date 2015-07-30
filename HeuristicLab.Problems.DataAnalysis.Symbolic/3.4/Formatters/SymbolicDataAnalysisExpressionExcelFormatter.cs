@@ -259,7 +259,7 @@ namespace HeuristicLab.Problems.DataAnalysis.Symbolic {
         stringBuilder.Append(FormatRecursively(node.GetSubtree(1)));
         stringBuilder.Append("), 1.0, -1.0)");
       } else {
-        throw new NotImplementedException("Excel export of " + node.Symbol + " is not implemented.");
+        throw new ArgumentException("Excel export of " + node.Symbol + " is not implemented.");
       }
       return stringBuilder.ToString();
     }
