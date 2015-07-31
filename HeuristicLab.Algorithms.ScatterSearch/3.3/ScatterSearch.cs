@@ -160,18 +160,18 @@ namespace HeuristicLab.Algorithms.ScatterSearch {
     [StorableHook(HookType.AfterDeserialization)]
     private void AfterDeserialization() {
       // BackwardsCompatibility3.3
-      #region Backwards compatible code, remove with 3.4
-      if (Parameters.ContainsKey("SimilarityCalculator")) {
-#pragma warning disable 0618
-        var oldParameter = (IConstrainedValueParameter<ISingleObjectiveSolutionSimilarityCalculator>)Parameters["SimilarityCalculator"];
-#pragma warning restore 0618
-        Parameters.Remove(oldParameter);
-        var newParameter = new ConstrainedValueParameter<ISolutionSimilarityCalculator>("SimilarityCalculator", "The operator used to calculate the similarity between two solutions.", new ItemSet<ISolutionSimilarityCalculator>(oldParameter.ValidValues));
-        var selectedSimilarityCalculator = newParameter.ValidValues.SingleOrDefault(x => x.GetType() == oldParameter.Value.GetType());
-        newParameter.Value = selectedSimilarityCalculator;
-        Parameters.Add(newParameter);
-      }
-      #endregion
+      //      #region Backwards compatible code, remove with 3.4
+      //      if (Parameters.ContainsKey("SimilarityCalculator")) {
+      //#pragma warning disable 0618
+      //        var oldParameter = (IConstrainedValueParameter<ISingleObjectiveSolutionSimilarityCalculator>)Parameters["SimilarityCalculator"];
+      //#pragma warning restore 0618
+      //        Parameters.Remove(oldParameter);
+      //        var newParameter = new ConstrainedValueParameter<ISolutionSimilarityCalculator>("SimilarityCalculator", "The operator used to calculate the similarity between two solutions.", new ItemSet<ISolutionSimilarityCalculator>(oldParameter.ValidValues));
+      //        var selectedSimilarityCalculator = newParameter.ValidValues.SingleOrDefault(x => x.GetType() == oldParameter.Value.GetType());
+      //        newParameter.Value = selectedSimilarityCalculator;
+      //        Parameters.Add(newParameter);
+      //      }
+      //      #endregion
       Initialize();
     }
     private ScatterSearch(ScatterSearch original, Cloner cloner)
