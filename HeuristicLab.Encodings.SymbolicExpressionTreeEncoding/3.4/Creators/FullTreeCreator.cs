@@ -76,7 +76,7 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
 
       rootNode.AddSubtree(startNode);
 
-      Create(random, startNode, maxTreeDepth - 2);
+      Create(random, startNode, maxTreeDepth);
       tree.Root = rootNode;
       return tree;
     }
@@ -115,7 +115,7 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
       // Start from depth 2 since the first two levels are formed by the rootNode and the seedNode
       foreach (var subTree in seedNode.Subtrees)
         if (subTree.Grammar.GetMaximumSubtreeCount(subTree.Symbol) > 0)
-          RecursiveCreate(random, subTree, 2, maxDepth);
+          RecursiveCreate(random, subTree, 3, maxDepth);
     }
 
     private static void RecursiveCreate(IRandom random, ISymbolicExpressionTreeNode root, int currentDepth, int maxDepth) {
@@ -129,11 +129,16 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
         .ToList();
 
       for (var i = 0; i < arity; i++) {
-        var possibleSymbols = allowedSymbols
+        var possibleMaximumConstrainedSymbols = allowedSymbols
           .Where(s => root.Grammar.IsAllowedChildSymbol(root.Symbol, s, i) &&
-            root.Grammar.GetMinimumExpressionDepth(s) - 1 <= maxDepth - currentDepth &&
-            root.Grammar.GetMaximumExpressionDepth(s) > maxDepth - currentDepth)
+            root.Grammar.GetMinimumExpressionDepth(s) - 1 <= maxDepth - currentDepth)
           .ToList();
+
+        var possibleMinAndMaxConstrainedSymbols = possibleMaximumConstrainedSymbols
+         .Where(s => root.Grammar.GetMaximumExpressionDepth(s) > maxDepth - currentDepth)
+         .ToList();
+
+        var possibleSymbols = possibleMinAndMaxConstrainedSymbols.Any() ? possibleMinAndMaxConstrainedSymbols : possibleMaximumConstrainedSymbols;
         if (!possibleSymbols.Any())
           throw new InvalidOperationException("No symbols are available for the tree.");
         var weights = possibleSymbols.Select(s => s.InitialFrequency).ToList();
@@ -141,7 +146,7 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
 #pragma warning disable 612, 618
         var selectedSymbol = possibleSymbols.SelectRandom(weights, random);
 #pragma warning restore 612, 618
-        
+
         var tree = selectedSymbol.CreateTreeNode();
         if (tree.HasLocalParameters) tree.ResetLocalParameters(random);
         root.AddSubtree(tree);

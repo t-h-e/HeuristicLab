@@ -1,0 +1,7 @@
+*.suo
+*.user
+bin/
+obj/
+Google.ProtocolBuffers-2.4.1.473.dll
+protoc.exe
+ProtoGen.exe
