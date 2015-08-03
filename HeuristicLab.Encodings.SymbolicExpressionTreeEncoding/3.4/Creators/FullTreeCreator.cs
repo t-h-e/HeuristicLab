@@ -129,11 +129,16 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
         .ToList();
 
       for (var i = 0; i < arity; i++) {
-        var possibleSymbols = allowedSymbols
+        var possibleMaximumConstrainedSymbols = allowedSymbols
           .Where(s => root.Grammar.IsAllowedChildSymbol(root.Symbol, s, i) &&
-            root.Grammar.GetMinimumExpressionDepth(s) - 1 <= maxDepth - currentDepth &&
-            root.Grammar.GetMaximumExpressionDepth(s) > maxDepth - currentDepth)
+            root.Grammar.GetMinimumExpressionDepth(s) - 1 <= maxDepth - currentDepth)
           .ToList();
+
+        var possibleMinAndMaxConstrainedSymbols = possibleMaximumConstrainedSymbols
+         .Where(s => root.Grammar.GetMaximumExpressionDepth(s) > maxDepth - currentDepth)
+         .ToList();
+
+        var possibleSymbols = possibleMinAndMaxConstrainedSymbols.Any() ? possibleMinAndMaxConstrainedSymbols : possibleMaximumConstrainedSymbols;
         if (!possibleSymbols.Any())
           throw new InvalidOperationException("No symbols are available for the tree.");
         var weights = possibleSymbols.Select(s => s.InitialFrequency).ToList();
