@@ -1,0 +1,17 @@
+chmod +x PreBuildEvent.sh
+chmod +x MergeConfigs.sh
+chmod +x prepareProjectsForMonoWithoutViews.sh
+
+./prepareProjectsForMonoWithoutViews.sh
+
+//Some projects might have to be added again after the previous command
+
+xbuild HeuristicLab.ExtLibs.sln
+xbuild "HeuristicLab 3.3.sln"
+
+
+//HeuristicLab.Problems.Instances.Orienteering && HeuristicLab.Problems.Orienteering && HeuristicLab.Problems.Orienteering.Views:
+//Prebuild command is not set for other systems than windows
+
+//HeuristicLab.Problems.Instances.DataAnalysis:
+/has reference to windowsForms which is not necessary
