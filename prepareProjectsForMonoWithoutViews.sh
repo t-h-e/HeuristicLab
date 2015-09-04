@@ -1,10 +1,17 @@
 # remove projects that do not build and views
 unamestr=`uname`
 if [[ "$unamestr" == 'Darwin' ]]; then
-   awk '/ICSharpCode.AvalonEdit-5.0.1|HeuristicLab.AvalonEdit-5.0.1/ {while (/ICSharpCode.AvalonEdit-5.0.1|HeuristicLab.AvalonEdit-5.0.1/ && getline>0) ; next} 1' HeuristicLab.ExtLibs.sln > tmp
-   mv tmp HeuristicLab.ExtLibs.sln
-   awk '/HeuristicLab.Problems.ExternalEvaluation-3.4|HeuristicLab.Problems.ExternalEvaluation.GP-3.5|HeuristicLab.Problems.ExternalEvaluation.Views-3.4|HeuristicLab.Problems.ExternalEvaluation.Matlab-3.3/ {while (/HeuristicLab.Problems.ExternalEvaluation-3.4|HeuristicLab.Problems.ExternalEvaluation.GP-3.5|HeuristicLab.Problems.ExternalEvaluation.Views-3.4|HeuristicLab.Problems.ExternalEvaluation.Matlab-3.3/ && getline>0) ; next} 1' "HeuristicLab 3.3.sln" > tmp
-   mv tmp "HeuristicLab 3.3.sln"
+    awk '/ICSharpCode.AvalonEdit-5.0.1|HeuristicLab.AvalonEdit-5.0.1/ {while (/ICSharpCode.AvalonEdit-5.0.1|HeuristicLab.AvalonEdit-5.0.1/ && getline>0) ; next} 1' HeuristicLab.ExtLibs.sln > tmp
+    mv tmp HeuristicLab.ExtLibs.sln
+    
+    for project in $(grep --include=*.csproj -rwl "System.Windows.Forms" . | xargs -n 1 basename)
+    do
+        awk '/$project/ {while (/$project/ && getline>0) ; next} 1' "HeuristicLab 3.3.sln" > tmp
+        mv tmp "HeuristicLab 3.3.sln"
+    done;  
+    
+    awk '/HeuristicLab.Problems.ExternalEvaluation-3.4|HeuristicLab.Problems.ExternalEvaluation.GP-3.5|HeuristicLab.Problems.ExternalEvaluation.Views-3.4|HeuristicLab.Problems.ExternalEvaluation.Matlab-3.3/ {while (/HeuristicLab.Problems.ExternalEvaluation-3.4|HeuristicLab.Problems.ExternalEvaluation.GP-3.5|HeuristicLab.Problems.ExternalEvaluation.Views-3.4|HeuristicLab.Problems.ExternalEvaluation.Matlab-3.3/ && getline>0) ; next} 1' "HeuristicLab 3.3.sln" > tmp
+    mv tmp "HeuristicLab 3.3.sln"
 elif [[ "$unamestr" == 'Linux' ]]; then
     sed -e '/ICSharpCode.AvalonEdit-5.0.1/,+1d' -e '/HeuristicLab.AvalonEdit-5.0.1/,+1d' HeuristicLab.ExtLibs.sln > tmp
     mv tmp HeuristicLab.ExtLibs.sln

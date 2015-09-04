@@ -1,3 +1,9 @@
+// EOL conversion might be necessary ofr PreBuildEvent.sh and prepareProjectsForMonoWithoutViews.sh
+
+//due to OSX xbuild problems
+// comment last copy command in HeuristicLab.ExtLibs/HeuristicLab.ProtobufCS/2.4.1/ProtobufCS/src/ProtoGen/ProtoGen-2.4.1.473.csproj
+cp HeuristicLab.ExtLibs/HeuristicLab.ProtobufCS/2.4.1/ProtobufCS/lib/protoc.exe .
+
 chmod +x PreBuildEvent.sh
 chmod +x MergeConfigs.sh
 chmod +x prepareProjectsForMonoWithoutViews.sh
@@ -8,7 +14,8 @@ chmod +x prepareProjectsForMonoWithoutViews.sh
 
 xbuild HeuristicLab.ExtLibs.sln
 xbuild "HeuristicLab 3.3.sln"
-
+// alternatively use
+xbuild "HeuristicLab.NoViews.sln"
 
 //HeuristicLab.Problems.Instances.Orienteering && HeuristicLab.Problems.Orienteering && HeuristicLab.Problems.Orienteering.Views:
 //Prebuild command is not set for other systems than windows
