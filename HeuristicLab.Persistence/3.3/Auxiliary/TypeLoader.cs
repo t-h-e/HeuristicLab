@@ -179,7 +179,7 @@ namespace HeuristicLab.Persistence.Auxiliary {
         genericArgsList.Add(new TypeName(typeof(String).Namespace, "String"));
         newTypeName.GenericArgs = genericArgsList;
         return newTypeName;
-      } else if (typeName.Namespace == "System.Collections.Generic" && typeName.ClassName == "EqualityComparer+DefaultComparer") {
+      } else if (typeName.Namespace == "System.Collections.Generic" && (typeName.ClassName == "DefaultComparer" || typeName.ClassName == "EqualityComparer+DefaultComparer")) {
         TypeName newTypeName = new TypeName(cachedWindowsObjectEqualityComparerType);
         newTypeName.GenericArgs = new List<TypeName>(typeName.GenericArgs);
         return newTypeName;
