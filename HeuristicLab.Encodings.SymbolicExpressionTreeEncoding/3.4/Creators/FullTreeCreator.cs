@@ -97,9 +97,19 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
         .ToList();
 
       for (var i = 0; i < arity; i++) {
-        var possibleSymbols = allowedSymbols
-          .Where(s => seedNode.Grammar.IsAllowedChildSymbol(seedNode.Symbol, s, i))
+        var possibleMaximumConstrainedSymbols = allowedSymbols
+          .Where(s => seedNode.Grammar.IsAllowedChildSymbol(seedNode.Symbol, s, i) &&
+            seedNode.Grammar.GetMinimumExpressionDepth(s) - 1 <= maxDepth - 2)
           .ToList();
+
+        var possibleMinAndMaxConstrainedSymbols = possibleMaximumConstrainedSymbols
+         .Where(s => seedNode.Grammar.GetMaximumExpressionDepth(s) > maxDepth - 2)
+         .ToList();
+
+        var possibleSymbols = possibleMinAndMaxConstrainedSymbols.Any() ? possibleMinAndMaxConstrainedSymbols : possibleMaximumConstrainedSymbols;
+        if (!possibleSymbols.Any())
+          throw new InvalidOperationException("No symbols are available for the tree.");
+
         var weights = possibleSymbols.Select(s => s.InitialFrequency).ToList();
 
 #pragma warning disable 612, 618
