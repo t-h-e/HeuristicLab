@@ -76,7 +76,7 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
 
       rootNode.AddSubtree(startNode);
 
-      Create(random, startNode, maxTreeDepth);
+      Create(random, startNode, maxTreeDepth - 2);
       tree.Root = rootNode;
       return tree;
     }
@@ -125,7 +125,7 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
       // Start from depth 2 since the first two levels are formed by the rootNode and the seedNode
       foreach (var subTree in seedNode.Subtrees)
         if (subTree.Grammar.GetMaximumSubtreeCount(subTree.Symbol) > 0)
-          RecursiveCreate(random, subTree, 3, maxDepth);
+          RecursiveCreate(random, subTree, 2, maxDepth);
     }
 
     private static void RecursiveCreate(IRandom random, ISymbolicExpressionTreeNode root, int currentDepth, int maxDepth) {

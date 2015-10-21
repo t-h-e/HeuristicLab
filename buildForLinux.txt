@@ -17,6 +17,10 @@ xbuild "HeuristicLab 3.3.sln"
 // alternatively use
 xbuild "HeuristicLab.NoViews.sln"
 
+
+then:
+xbuild HeuristicLab.CFGGP.NoViews.sln
+
 //HeuristicLab.Problems.Instances.Orienteering && HeuristicLab.Problems.Orienteering && HeuristicLab.Problems.Orienteering.Views:
 //Prebuild command is not set for other systems than windows
 

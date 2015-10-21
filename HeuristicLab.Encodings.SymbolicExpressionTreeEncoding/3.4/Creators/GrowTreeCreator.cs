@@ -73,7 +73,7 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
 
       rootNode.AddSubtree(startNode);
 
-      Create(random, startNode, maxTreeDepth);
+      Create(random, startNode, maxTreeDepth - 2);
       tree.Root = rootNode;
       return tree;
     }

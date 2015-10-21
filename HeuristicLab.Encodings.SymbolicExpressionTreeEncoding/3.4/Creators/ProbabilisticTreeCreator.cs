@@ -68,7 +68,7 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
       startNode.SetGrammar(grammar.CreateExpressionTreeGrammar());
 
       rootNode.AddSubtree(startNode);
-      PTC2(random, startNode, maxTreeLength, maxTreeDepth);
+      PTC2(random, startNode, maxTreeLength - 1, maxTreeDepth - 1);
       tree.Root = rootNode;
       return tree;
     }

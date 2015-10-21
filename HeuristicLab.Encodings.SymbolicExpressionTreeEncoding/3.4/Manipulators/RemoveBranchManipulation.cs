@@ -85,14 +85,14 @@ namespace HeuristicLab.Encodings.SymbolicExpressionTreeEncoding {
         childIndex = random.Next(parent.SubtreeCount);
         var child = parent.GetSubtree(childIndex);
         maxLength = maxTreeLength - symbolicExpressionTree.Length + child.GetLength();
-        maxDepth = maxTreeDepth - symbolicExpressionTree.Depth + child.GetDepth();
+        maxDepth = maxTreeDepth - symbolicExpressionTree.Root.GetBranchLevel(child);
 
         allowedSymbols.Clear();
         foreach (var symbol in parent.Grammar.GetAllowedChildSymbols(parent.Symbol, childIndex)) {
           // check basic properties that the new symbol must have
-          if (symbol.Name != child.Symbol.Name &&
+          if ((symbol.Name != child.Symbol.Name || symbol.MinimumArity > 0) &&
             symbol.InitialFrequency > 0 &&
-            parent.Grammar.GetMinimumExpressionDepth(symbol) + 1 <= maxDepth &&
+            parent.Grammar.GetMinimumExpressionDepth(symbol) <= maxDepth &&
             parent.Grammar.GetMinimumExpressionLength(symbol) <= maxLength) {
             allowedSymbols.Add(symbol);
           }
