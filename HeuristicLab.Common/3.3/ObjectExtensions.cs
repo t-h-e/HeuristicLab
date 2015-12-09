@@ -122,6 +122,9 @@ namespace HeuristicLab.Common {
           catch (SecurityException) {
             continue;
           }
+          // SignatureHelper may throw a NullReferenceException when GetHashcode is called
+          // SignatureHelper is going to be excluded anyway by ExcludeType in GetObjectGraphObjects
+          if (fieldValue is System.Reflection.Emit.SignatureHelper) continue;
           if (excludedMembers.Contains(fieldValue)) continue;
           yield return fieldValue;
         }
