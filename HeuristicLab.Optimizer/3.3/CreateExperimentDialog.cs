@@ -771,6 +771,7 @@ namespace HeuristicLab.Optimizer {
         foreach (var provider in instances.Keys) {
           foreach (var descriptor in instances[provider]) {
             var algorithm = (IAlgorithm)Optimizer.Clone();
+            algorithm.Name += String.Format(" - {0}", descriptor.Name);
             bool failed = false;
             try {
               ProblemInstanceManager.LoadData(provider, descriptor, (IProblemInstanceConsumer)algorithm.Problem);
