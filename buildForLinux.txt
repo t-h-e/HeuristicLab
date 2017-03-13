@@ -1,4 +1,16 @@
-// EOL conversion might be necessary for PreBuildEvent.sh and prepareProjectsForMonoWithoutViews.sh
+New:
+// EOL conversion of PreBuildEvent.sh and MergeConfigs.sh if git was not used
+chmod +x PreBuildEvent.sh
+chmod +x MergeConfigs.sh
+
+xbuild HeuristicLab.ExtLibs.NoViews.sln
+xbuild "HeuristicLab.NoViews.sln"
+
+in HeuristicLab.CFGGP
+xbuild HeuristicLab.CFGGP.NoViews.sln
+
+
+// EOL conversion might be necessary for PreBuildEvent.sh !!!! (maybe even for prepareProjectsForMonoWithoutViews.sh)
 
 //due to OSX xbuild problems
 // comment last copy command in HeuristicLab.ExtLibs/HeuristicLab.ProtobufCS/2.4.1/ProtobufCS/src/ProtoGen/ProtoGen-2.4.1.473.csproj
