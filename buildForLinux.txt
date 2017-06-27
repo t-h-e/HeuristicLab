@@ -1,20 +1,22 @@
 New:
 // EOL conversion of PreBuildEvent.sh and MergeConfigs.sh if git was not used
+dos2unix PreBuildEvent.sh
+dos2unix MergeConfigs.sh
 chmod +x PreBuildEvent.sh
 chmod +x MergeConfigs.sh
 
-xbuild HeuristicLab.ExtLibs.NoViews.sln
-xbuild "HeuristicLab.NoViews.sln"
+msbuild HeuristicLab.ExtLibs.NoViews.sln
+msbuild "HeuristicLab.NoViews.sln"
 
 in HeuristicLab.CFGGP
-xbuild HeuristicLab.CFGGP.NoViews.sln
+msbuild HeuristicLab.CFGGP.NoViews.sln
 
-
-// EOL conversion might be necessary for PreBuildEvent.sh !!!! (maybe even for prepareProjectsForMonoWithoutViews.sh)
-
-//due to OSX xbuild problems
+//due to OSX xbuild problems (not tested with msbuild)
 // comment last copy command in HeuristicLab.ExtLibs/HeuristicLab.ProtobufCS/2.4.1/ProtobufCS/src/ProtoGen/ProtoGen-2.4.1.473.csproj
 cp HeuristicLab.ExtLibs/HeuristicLab.ProtobufCS/2.4.1/ProtobufCS/lib/protoc.exe .
+
+Old:
+// EOL conversion might be necessary for PreBuildEvent.sh ! (maybe even for prepareProjectsForMonoWithoutViews.sh)
 
 chmod +x PreBuildEvent.sh
 chmod +x MergeConfigs.sh
@@ -24,17 +26,11 @@ chmod +x prepareProjectsForMonoWithoutViews.sh
 
 //Some projects might have to be added again after the previous command
 
-xbuild HeuristicLab.ExtLibs.sln
-xbuild "HeuristicLab 3.3.sln"
+msbuild HeuristicLab.ExtLibs.sln
+msbuild "HeuristicLab 3.3.sln"
 // alternatively use
-xbuild "HeuristicLab.NoViews.sln"
+msbuild "HeuristicLab.NoViews.sln"
 
 
 then:
-xbuild HeuristicLab.CFGGP.NoViews.sln
-
-//HeuristicLab.Problems.Instances.Orienteering && HeuristicLab.Problems.Orienteering && HeuristicLab.Problems.Orienteering.Views:
-//Prebuild command is not set for other systems than windows
-
-//HeuristicLab.Problems.Instances.DataAnalysis:
-/has reference to windowsForms which is not necessary
+msbuild HeuristicLab.CFGGP.NoViews.sln
